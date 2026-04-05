@@ -1,117 +1,147 @@
 # Customer, Orders, and Shipping Management System
 
-A simple Python + SQLite console application for managing customers, orders, and shipping details.
+A comprehensive GUI application built with Python, Tkinter, and SQLite for managing customer data, orders, and shipping information. Provides an intuitive tabbed interface for all operations with proper data relationships and validation.
 
-## Files
+## Features
 
-- `customer_orders.py` - main program file
-- `customer_orders.db` - SQLite database file (created automatically when running the program)
+- **Customer Registration**: Add new customers with personal details and validation
+- **Order Management**: Create orders linked to existing customers with product details
+- **Shipping Tracking**: Add and track shipping information for orders
+- **Customer Search**: Find customers by full name and view their complete order history
+- **Data Views**: Comprehensive lists of all customers and all orders with shipping status
+- **Data Integrity**: Foreign key constraints ensure proper relationships between tables
+- **Dynamic Updates**: Refresh buttons to update dropdown lists with latest data
+
+## Database Schema
+
+The application uses SQLite with three main tables connected through foreign key relationships:
+
+### customers
+- `id` (INTEGER PRIMARY KEY AUTOINCREMENT) - Unique customer identifier
+- `first_name` (TEXT NOT NULL) - Customer's first name
+- `last_name` (TEXT NOT NULL) - Customer's last name
+- `email` (TEXT NOT NULL UNIQUE) - Customer's email address (must be unique)
+- `phone` (TEXT NOT NULL) - Customer's phone number
+- `created_at` (TEXT NOT NULL) - Registration timestamp
+
+### orders
+- `id` (INTEGER PRIMARY KEY AUTOINCREMENT) - Unique order identifier
+- `customer_id` (INTEGER NOT NULL) - References customers.id (foreign key)
+- `product_name` (TEXT NOT NULL) - Name of the ordered product
+- `quantity` (INTEGER NOT NULL) - Number of items ordered
+- `price` (REAL NOT NULL) - Price per item
+- `order_date` (TEXT NOT NULL) - Order placement timestamp
+
+### shipping
+- `id` (INTEGER PRIMARY KEY AUTOINCREMENT) - Unique shipping record identifier
+- `order_id` (INTEGER NOT NULL UNIQUE) - References orders.id (foreign key)
+- `address` (TEXT NOT NULL) - Shipping street address
+- `city` (TEXT NOT NULL) - Shipping city
+- `postal_code` (TEXT NOT NULL) - Shipping postal/ZIP code
+- `country` (TEXT NOT NULL) - Shipping country
+- `status` (TEXT NOT NULL) - Shipping status (e.g., Processing, Shipped, Delivered)
+- `shipped_date` (TEXT) - Shipment timestamp (set automatically when status is "Shipped" or "Delivered")
+
+### Relationships
+- **One-to-Many**: One customer can have multiple orders (customers.id → orders.customer_id)
+- **One-to-One**: Each order can have at most one shipping record (orders.id → shipping.order_id)
+- **Foreign Key Enforcement**: SQLite foreign keys are enabled to maintain referential integrity
 
 ## Requirements
 
 - Python 3.8 or newer
+- Tkinter (included with Python standard library)
+- SQLite3 (included with Python standard library)
 
-## Run the program
+## Installation
 
-1. Open a terminal in the project folder.
-2. Run:
+1. Ensure Python 3.8+ is installed on your system
+2. Download or clone the project files
+3. No additional dependencies required
+
+## Usage
+
+1. Open a terminal/command prompt in the project directory
+2. Run the application:
 
 ```bash
 python customer_orders.py
 ```
 
-3. A graphical user interface will open.
-4. Use the tabs to:
+3. The GUI window will open with multiple tabs:
 
-- Register new customers
-- Insert customer orders
-- Add shipping details
-- Search by customer full name
+### Register Tab
+- Enter customer details (first name, last name, email, phone)
+- Click "Register Customer" to add to database
+- Email must be unique across all customers
 
-## Sample usage
+### Orders Tab
+- Select a customer from the dropdown (use "Refresh Customers" if needed)
+- Enter product name, quantity, and price per item
+- Click "Add Order" to create a new order linked to the selected customer
 
-```
-Customer, Orders, and Shipping Management System
+### Shipping Tab
+- Select an order from the dropdown (use "Refresh Orders" if needed)
+- Enter shipping address details and status
+- Click "Add Shipping" to attach shipping information to the order
+- Shipped date is set automatically for "Shipped" or "Delivered" status
 
-Select an option:
-1. Register new customer
-2. Insert customer order
-3. Add shipping details
-4. Search customer by full name
-5. List registered customers
-6. Exit
-Option: 1
+### Search Tab
+- Enter customer's full name (first and last name)
+- Click "Search" to view customer details and all their orders with shipping status
 
-=== Register New Customer ===
-First name: Alice
-Last name: Johnson
-Email: alice@example.com
-Phone number: 555-0199
-Customer registered successfully.
+### Customers Tab
+- Click "Refresh Customers" to view a list of all registered customers
 
-Select an option:
-Option: 2
+### All Orders Tab
+- Click "Refresh All Orders" to view every order in the system with customer names and shipping details
 
-=== Add Customer Order ===
-Customer ID: 1
-Product name: Laptop
-Quantity: 2
-Price per item: 1200
-Order inserted successfully.
+## Files
 
-Select an option:
-Option: 3
+- `customer_orders.py` - Main application file containing all logic and GUI
+- `customer_orders.db` - SQLite database file (created automatically on first run)
 
-=== Add Shipping Details ===
-Order ID: 1
-Shipping address: 123 Main St
-City: Springfield
-Postal code: 12345
-Country: USA
-Status (e.g. Processing, Shipped, Delivered): Shipped
-Shipping details added successfully.
+## Sample Workflow
 
-Select an option:
-Option: 4
+1. **Register a Customer**:
+   - Go to Register tab
+   - Enter: First name "John", Last name "Doe", Email "john@example.com", Phone "555-0123"
+   - Click Register
 
-=== Search Customer Orders ===
-Enter customer full name: Alice Johnson
+2. **Add an Order**:
+   - Go to Orders tab
+   - Select "1: John Doe (john@example.com)" from customer dropdown
+   - Enter: Product "Laptop", Quantity "1", Price "1200.00"
+   - Click Add Order
 
-Customer: Alice Johnson
-Email: alice@example.com
-Phone: 555-0199
-Registered: 2026-04-05T14:30:00
+3. **Add Shipping**:
+   - Go to Shipping tab
+   - Select "Order 1: Laptop (John Doe)" from order dropdown
+   - Enter address details and set status to "Shipped"
+   - Click Add Shipping
 
-Orders:
+4. **Search Customer**:
+   - Go to Search tab
+   - Enter "John Doe"
+   - Click Search to see customer info, order details, and shipping status
 
-Order ID: 1
-Product: Laptop
-Quantity: 2
-Price per item: 1200.00
-Total amount: 2400.00
-Order date: 2026-04-05T14:31:00
-Shipping:
-  Address: 123 Main St
-  City: Springfield
-  Postal code: 12345
-  Country: USA
-  Status: Shipped
-  Shipped date: 2026-04-05T14:32:00
-```
+## Notes
 
-## Features
+- The database file `customer_orders.db` is created automatically in the same directory as the script
+- All tables are created with proper constraints on first run
+- Foreign key relationships prevent orphaned records
+- Input validation ensures data quality
+- Refresh buttons update dropdown lists to reflect recent changes
+- Shipping records are unique per order (one shipping entry per order)
+- Timestamps use ISO format for consistency
 
-- **Register Customers**: Add new customers with personal details.
-- **Add Orders**: Select an existing customer from a dropdown and add order details. Use "Refresh Customers" to update the list.
-- **Add Shipping**: Select an existing order from a dropdown and add shipping information. Use "Refresh Orders" to update the list.
-- **Search Customers**: Find customers by full name and view their orders and shipping status.
-- **List Customers**: View all registered customers.
-- **View All Orders**: Display all orders with customer details and shipping status. Use "Refresh All Orders" to update.
+## Data Integrity
 
-## Database Schema
+The application enforces data integrity through:
+- Required fields (NOT NULL constraints)
+- Unique email addresses
+- Foreign key relationships
+- Input validation in the GUI
+- Automatic timestamp generation
 
-- **customers**: id, first_name, last_name, email, phone, created_at
-- **orders**: id, customer_id (FK to customers), product_name, quantity, price, order_date
-- **shipping**: id, order_id (FK to orders), address, city, postal_code, country, status, shipped_date
-
-Foreign key constraints ensure data integrity.
+This ensures a robust and reliable customer management system.
