@@ -1,24 +1,3 @@
-"""
-Customer, Orders, and Shipping Management System
-
-A GUI application built with Tkinter and SQLite for managing customer data,
-orders, and shipping information. Provides a user-friendly interface for
-registering customers, placing orders, tracking shipping, and viewing records.
-
-Features:
-- Customer registration with validation
-- Order placement linked to customers
-- Shipping details linked to orders
-- Search functionality by customer name
-- Comprehensive views of all customers and orders
-- Foreign key constraints ensure data integrity
-
-Database Schema:
-- customers: id, first_name, last_name, email, phone, created_at
-- orders: id, customer_id (FK), product_name, quantity, price, order_date
-- shipping: id, order_id (FK), address, city, postal_code, country, status, shipped_date
-"""
-
 import sqlite3
 from datetime import datetime
 from pathlib import Path
