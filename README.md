@@ -53,12 +53,6 @@ The application uses SQLite with three main tables connected through foreign key
 - Tkinter (included with Python standard library)
 - SQLite3 (included with Python standard library)
 
-## Installation
-
-1. Ensure Python 3.8+ is installed on your system
-2. Download or clone the project files
-3. No additional dependencies required
-
 ## Usage
 
 1. Open a terminal/command prompt in the project directory
@@ -105,24 +99,24 @@ python customer_orders.py
 
 1. **Register a Customer**:
    - Go to Register tab
-   - Enter: First name "John", Last name "Doe", Email "john@example.com", Phone "555-0123"
+   - Enter: First name "Muhammad", Last name "Kumail", Email "kumail@gmail.com", Phone "12345566"
    - Click Register
 
 2. **Add an Order**:
    - Go to Orders tab
-   - Select "1: John Doe (john@example.com)" from customer dropdown
+   - Select "1: Muhammad Kumail (kumail@example.com)" from customer dropdown
    - Enter: Product "Laptop", Quantity "1", Price "1200.00"
    - Click Add Order
 
 3. **Add Shipping**:
    - Go to Shipping tab
-   - Select "Order 1: Laptop (John Doe)" from order dropdown
+   - Select "Order 1: Laptop (Muhammad Kumail)" from order dropdown
    - Enter address details and set status to "Shipped"
    - Click Add Shipping
 
 4. **Search Customer**:
    - Go to Search tab
-   - Enter "John Doe"
+   - Enter "Muhammad Kumail"
    - Click Search to see customer info, order details, and shipping status
 
 ## Notes
